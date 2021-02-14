@@ -12,7 +12,7 @@ interface SingleFileProp
   extends Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'type' | 'onChange' | 'multiple'>
 {
   onChange: (fp: Base64FileType) => void;
-  multiple?: never;
+  multiple?: false;
 }
 
 interface MultipleFileProp 
@@ -46,20 +46,21 @@ const ReactFileBase64 = ({ onChange, multiple, ...props }: Props) => {
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     if (multiple && e?.target?.files?.length) {
-      const base64Images: Base64FileType[] = [];
+      const base64Files: Base64FileType[] = [];
       for (let i = 0; i < e.target.files.length; i++) {
         if (e?.target?.files?.[i]) {
           const fp = e.target.files[i];
-          base64Images.push(await covertFileToBase64(fp, reader));
+          base64Files.push(await covertFileToBase64(fp, reader));
         }
       }
-      // @ts-ignore
-      onChange(base64Images);
+      //@ts-ignore
+      onChange(base64Files);
     } else {
       if (e?.target?.files?.[0]) {
         const fp = e.target.files[0];
-        // @ts-ignore
-        onChange(await covertFileToBase64(fp, reader));
+        const base64File = await covertFileToBase64(fp, reader);
+        //@ts-ignore
+        onChange(base64File);
       }
     }
   };
