@@ -1,6 +1,7 @@
 # React File Base 64
 
 Converts file in the a base64
+
 Extends normal HTML input element with omissions
 
 ## How to use
@@ -36,7 +37,7 @@ interface Base64FileType {
   name: string;
   type: string;
   kb: number;
-  base64: string; <- Converted Base64 File
+  base64: string; // <- Converted Base64 File
   file: File;
 }
 ```
